@@ -1,0 +1,381 @@
+/* ------------------ VARIABLES GLOBALES ------------------ */
+:root {
+  --ion-color-primary: #1e88e5;
+  --ion-color-success: #27ae60;
+  --ion-color-danger: #e74c3c;
+  --app-bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --muted: #666666;
+  --text-dark: #222222;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --font-family: 'Poppins', Arial, sans-serif;
+  --font-base: 1rem;
+}
+
+/* Base */
+* { box-sizing: border-box; }
+html, body { font-family: 
+var(--font-family); font-size: 
+var(--font-base); }
+
+/* Fondo general de la app (usado en página Principal) */
+.fondo-app { background: 
+  var(--app-bg); }
+
+------------------ LOGO ------------------ 
+---Logo usado en las páginas de formulario 
+.form-logo-container {
+  display: flex; justify-content: center; margin-top: 1.25rem;
+}
+.form-logo { width: 5.9rem; height: 5.9rem; object-fit: contain; }
+
+/* Logo en página Principal */
+.header-principal { text-align: center; margin-top: 20px; }
+.logo-ahorrapp {
+  width: 80px; height: 80px;
+  margin-bottom: 5px;
+}
+.titulo-app {
+  font-size: 26px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* ------------------ BIENVENIDA (Página Principal) ------------------ */
+.bienvenida-banner {
+  background: #3f7cff;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 90%;
+  margin: 20px auto;
+}
+
+/* ------------------ SECCIÓN SALUD FINANCIERA ------------------ */
+.salud-header {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 90%; margin: 20px auto;
+}
+.titulo-seccion { font-size: 20px; font-weight: bold; }
+.boton-vermas {
+  --background: #4c8dff; border-radius: 12px;
+  padding-left: 12px; padding-right: 12px;
+}
+
+/* ------------------ TARJETAS EN PRINCIPAL ------------------ */
+.contenedor-tarjetas {
+  display: flex; flex-direction: column; gap: 16px;
+  width: 90%; margin: 20px auto;
+}
+.card-blanca {
+  border-radius: 18px; background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+}
+.titulo-tarjeta {
+  color: #666; font-size: 16px; text-align: center;
+}
+.monto {
+  font-size: 28px; font-weight: bold; margin-top: 8px; text-align: center;
+}
+.ingreso { color: #0a9f6b; }
+.gasto { color: #e14c4c; }
+
+/* ------------------ BOTONES GRANDES (Principal) ------------------ */
+.botones-acciones {
+  width: 90%; margin: 20px auto;
+  display: flex; flex-direction: column; gap: 14px;
+  align-items: center;
+}
+.btn-ingreso {
+  --background: #0bb76d;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 18px;
+  color: white;
+}
+.btn-gasto {
+  --background: #d43c3c;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 18px;
+  color: white;
+}
+
+/* ------------------ ALERTA DE SOBREENDEUDAMIENTO ------------------ */
+.alerta-card {
+  margin: 20px auto; width: 90%;
+  border-left: 5px solid #e14c4c;
+  background: #ffecec;
+  border-radius: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  text-align: center;
+  padding: 1rem;
+}
+
+/* ------------------ FORMULARIOS (Ingreso y Gasto) ------------------ */
+.form-titulo {
+  text-align: center;
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-top: 0.9rem;
+}
+.form-card {
+  background: var(--card-bg);
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  max-width: 48rem;
+  margin: 2.5rem auto;
+}
+.form-item {
+  background: #f5f8fa;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.375rem;
+  padding: 0.375rem;
+}
+.form-item ion-label {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Inputs y selects en formularios */
+.input-simple, .select-simple {
+  width: 100%;
+  padding: 0.625rem;
+  font-size: 0.95rem;
+  border-radius: 0.625rem;
+  border: 1px solid #d0d6db;
+  background: #fff;
+}
+
+/* Botón guardar centrado en formularios */
+.btn-guardar {
+  --background: #00c853;
+  --color: #ffffff;
+  --border-radius: 0.875rem;
+  width: 60%;
+  margin: 1.5rem auto 0;
+  height: 3.125rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ------------------ DETALLES (SaludDetalle) ------------------ */
+.detalle-card {
+  background: var(--card-bg);
+  width: 90%; margin: 1.25rem auto; padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  text-align: center;
+}
+.titulo-detalle { font-size: 1.375rem; font-weight: 700; }
+.total-detalle-grande { font-size: 2.125rem; font-weight: 800; }
+
+/* Tarjetas individuales en lista de movimientos */
+.mov-card {
+  background: var(--card-bg);
+  padding: 1.125rem;
+  margin: 0.75rem auto;
+  width: 90%;
+  border-radius: 1.125rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.10);
+}
+.mov-titulo { font-weight: 700; margin-bottom: 0.25rem; }
+.mov-fecha { color: var(--muted); margin-bottom: 0.5rem; }
+
+/* Botón volver */
+.btn-volver {
+  width: 90%; margin: auto; margin-top: 15px;
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 420px) {
+  .form-card { margin: 1.25rem 1rem; padding: 1rem; }
+  .btn-guardar { width: 80%; }
+}
+
+   /*Estilos para la página Salud Financiera (SaludFinanciera.js)
+ 
+
+/* Fondo general */
+.salud-fondo {
+  background-color: #f6f8fa;
+  min-height: 100vh;
+}
+
+/* Título principal */
+.salud-titulo {
+  font-weight: 700;
+  font-size: 26px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Tarjeta de totales (Ingresos/Gastos) */
+.tarjeta-blanca {
+  background: white;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.valor-total {
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.valor-ingresos {
+  color: #2ecc71;
+}
+
+.valor-gastos {
+  color: #e74c3c;
+}
+
+.titulo-tarjeta-total {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Flechas para cambiar vista */
+.flecha-cambio {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  background: #f0f0f0;
+  border: none;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.flecha-cambio:hover {
+  background: #e0e0e0;
+}
+
+/* Contenedor principal con flechas y tarjeta */
+.contenedor-vista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  margin-top: 25px;
+}
+
+/* Tarjeta con gráfica */
+.tarjeta-grafica {
+  background: white;
+  border-radius: 25px;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  margin: auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Header de tarjeta de gráfica */
+.header-grafica {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.titulo-grafica {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+/* Contenedor para la gráfica (canvas) */
+.contenedor-canvas {
+  width: 100%;
+  height: 280px;
+}
+
+  /* Estilos para la página de inicio (Inicio.js)
+
+
+/* Fondo general */
+.inicio-fondo {
+  background-color: #ffffff;
+  height: 100%;
+  min-height: 100vh;
+}
+
+/* Contenedor general centrado */
+.inicio-contenedor {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -30px;
+}
+
+/* Tarjeta central */
+.inicio-card {
+  width: 90%;
+  max-width: 550px;
+  padding: 40px;
+  border-radius: 25px;
+  background: white;
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Título */
+.inicio-titulo {
+  color: #4527a0;
+  font-weight: bold;
+  margin-bottom: 18px;
+  font-size: 30px;
+}
+
+/* Texto explicativo */
+.inicio-texto {
+  display: block;
+  color: #444;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+/* Contenedor del input */
+.inicio-input-contenedor {
+  margin-bottom: 22px;
+}
+
+/* Estilo del input */
+.inicio-input {
+  background: #f4f4f4;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+/* Botón principal */
+.inicio-boton {
+  height: 52px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 18px;
+  --background: linear-gradient(90deg, #6a2cff, #b476ff);
+}
