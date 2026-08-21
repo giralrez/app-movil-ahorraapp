@@ -10,7 +10,6 @@ import FormularioIngreso from './paginas/FormularioIngreso';
 import FormularioGasto from './paginas/FormularioGasto';
 import SaludDetalles from './paginas/SaludDetalles';  
 import { obtenerUsuario } from './almacenamiento';
-import './tema.css';
 export default function App() {
   const [usuario, setUsuario] = useState('');
 
