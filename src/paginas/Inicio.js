@@ -6,7 +6,7 @@ import {
   IonButton,
   IonText
 } from "@ionic/react";
-import { guardarUsuario } from "../almacenamiento";
+import { setUsuario } from "../services/storage/storageService";
 import { useHistory } from "react-router-dom";
 
 
@@ -19,7 +19,7 @@ export default function Inicio() {
       alert("Por favor ingrese su nombre.");
       return;
     }
-    guardarUsuario(nombre.trim());
+    setUsuario(nombre.trim());
     history.push("/principal");
   };
 
