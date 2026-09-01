@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import {
   IonPage, IonContent, IonItem, IonLabel, IonButton
 } from '@ionic/react';
-import { obtenerTransacciones, guardarTransacciones } from '../almacenamiento';
+import { addTransaction } from '../services/transactionService';
+import { CATEGORIAS_INGRESO } from '../domain/transactions';
 import { useHistory } from 'react-router-dom';
 
 export default function FormularioIngreso() {
   const history = useHistory();
-  const [categoria, setCategoria] = useState('Salario');
+  const [categoria, setCategoria] = useState(CATEGORIAS_INGRESO[0]);
   const [monto, setMonto] = useState('');
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
 
   const guardar = () => {
     if (!monto) return alert('Ingrese un monto válido');
 
-    const lista = obtenerTransacciones();
-    lista.push({ tipo: 'ingreso', categoria, monto: Number(monto), fecha });
-    guardarTransacciones(lista);
+    addTransaction({ tipo: 'ingreso', categoria, monto: Number(monto), fecha });
     history.push('/principal');
   };
 
@@ -44,9 +43,9 @@ export default function FormularioIngreso() {
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
             >
-              <option value="Salario">Salario</option>
-              <option value="Venta">Venta</option>
-              <option value="Otro">Otro</option>
+              {CATEGORIAS_INGRESO.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
             </select>
           </IonItem>
 
@@ -71,7 +70,7 @@ export default function FormularioIngreso() {
             />
           </IonItem>
 
-       
+
           <IonButton expand="block" className="btn-guardar" onClick={guardar}>
             Guardar
           </IonButton>
