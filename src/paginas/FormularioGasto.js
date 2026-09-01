@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import {
   IonPage, IonContent, IonItem, IonLabel, IonButton
 } from '@ionic/react';
-import { obtenerTransacciones, guardarTransacciones } from '../almacenamiento';
+import { addTransaction } from '../services/transactionService';
+import { CATEGORIAS_GASTO } from '../domain/transactions';
 import { useHistory } from 'react-router-dom';
 
 export default function FormularioGasto() {
   const history = useHistory();
-  const [categoria, setCategoria] = useState('Comida');
+  const [categoria, setCategoria] = useState(CATEGORIAS_GASTO[0]);
   const [monto, setMonto] = useState('');
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
 
   const guardar = () => {
     if (!monto) return alert('Ingrese un monto válido');
 
-    const lista = obtenerTransacciones();
-    lista.push({ tipo: 'gasto', categoria, monto: Number(monto), fecha });
-    guardarTransacciones(lista);
+    addTransaction({ tipo: 'gasto', categoria, monto: Number(monto), fecha });
     history.push('/principal');
   };
 
@@ -44,10 +43,9 @@ export default function FormularioGasto() {
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
             >
-              <option value="Comida">Comida</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Servicios">Servicios</option>
-              <option value="Otro">Otro</option>
+              {CATEGORIAS_GASTO.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
             </select>
           </IonItem>
 
