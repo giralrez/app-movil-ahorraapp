@@ -3,46 +3,46 @@ import {
   IonPage,
   IonContent,
   IonButton,
-  IonCard,
-  IonCardContent,
   IonText
 } from '@ionic/react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { obtenerTransacciones } from '../almacenamiento';
+import { getTransacciones } from '../services/storage/storageService';
+import { calculateIncome, calculateExpenses, montoNumerico } from '../utils/financial';
+import { formatCurrency } from '../utils/format';
 
 export default function SaludDetalle() {
   const location = useLocation();
   const history = useHistory();
   const queryParams = new URLSearchParams(location.search);
-  const tipo = queryParams.get('tipo'); // ingresos | gastos
+  const tipo = queryParams.get('tipo');
 
   const [total, setTotal] = useState(0);
   const [lista, setLista] = useState([]);
 
   useEffect(() => {
-    const transacciones = obtenerTransacciones() || [];
+    const transacciones = getTransacciones() || [];
 
-    const tipoTransaccion = tipo.toLowerCase();
+    if (!tipo) {
+      setLista([]);
+      setTotal(0);
+      return;
+    }
 
-    const filtrados = transacciones.filter((t) => {
-      const tTipo = t.tipo.toLowerCase();
-      return (
-        tTipo === tipoTransaccion ||
-        tTipo === tipoTransaccion.slice(0, -1)
-      );
-    });
+    const tipoNormalizado = tipo === "ingresos" ? "ingreso" : tipo === "gastos" ? "gasto" : tipo.toLowerCase();
+    const filtrados = transacciones.filter((t) => t && t.tipo === tipoNormalizado);
 
     setLista(filtrados);
 
-    const totalCalculado = filtrados.reduce((acc, t) => acc + Number(t.monto), 0);
+    const totalCalculado = filtrados.reduce((acc, t) => acc + montoNumerico(t.monto), 0);
     setTotal(totalCalculado);
   }, [tipo]);
+
+  const esIngresos = tipo === "ingresos";
 
   return (
     <IonPage>
       <IonContent className="ion-padding detalles-fondo">
 
-        {/* Título */} 
         <h2
           style={{
             textAlign: 'center',
@@ -51,24 +51,22 @@ export default function SaludDetalle() {
             fontWeight: 'bold'
           }}
         >
-          Detalles de {tipo === "ingresos" ? "Ingresos" : "Gastos"}
+          Detalles de {esIngresos ? "Ingresos" : "Gastos"}
         </h2>
 
-        {/* Tarjeta */}
         <div className="detalle-card encabezado-detalle">
-  <h2 className="titulo-detalle">
-    {tipo === "ingresos" ? "Ingresos Totales" : "Gastos Totales"}
-  </h2>
+          <h2 className="titulo-detalle">
+            {esIngresos ? "Ingresos Totales" : "Gastos Totales"}
+          </h2>
 
-  <IonText
-    className="total-detalle-grande"
-    style={{ color: tipo === "ingresos" ? "#1EBD61" : "#E63946" }}
-  >
-    ${total.toLocaleString()}
-  </IonText>
-</div>
+          <IonText
+            className="total-detalle-grande"
+            style={{ color: esIngresos ? "#1EBD61" : "#E63946" }}
+          >
+            {formatCurrency(total)}
+          </IonText>
+        </div>
 
-        {/* Botón volver */}
         <div className="btn-volver">
           <IonButton
             expand="block"
@@ -79,20 +77,18 @@ export default function SaludDetalle() {
           </IonButton>
         </div>
 
-       {/* Subtítulo */}
         <h3 style={{ marginLeft: "15px", marginTop: "10px" }}>
-          Movimientos de {tipo === "ingresos" ? "Ingresos" : "Gastos"}
+          Movimientos de {esIngresos ? "Ingresos" : "Gastos"}
         </h3>
 
-        {/* Lista de tarjetas */}
         {lista.length === 0 ? (
           <p style={{ textAlign: "center", marginTop: "30px", color: "#777" }}>
             No hay movimientos registrados.
           </p>
         ) : (
           lista.map((item, index) => (
-            <div className="mov-card" key={index}>
-              
+            <div className="mov-card" key={item.id || `${item.tipo}-${item.fecha}-${item.monto}-${index}`}>
+
               <div className="mov-titulo">{item.categoria}</div>
 
               <div className="mov-fecha">Fecha: {item.fecha}</div>
@@ -101,10 +97,10 @@ export default function SaludDetalle() {
                 style={{
                   fontSize: "20px",
                   fontWeight: "bold",
-                  color: tipo === "ingresos" ? "#1EBD61" : "#E63946"
+                  color: esIngresos ? "#1EBD61" : "#E63946"
                 }}
               >
-                ${Number(item.monto).toLocaleString()}
+                {formatCurrency(item.monto)}
               </IonText>
             </div>
           ))

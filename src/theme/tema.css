@@ -25,8 +25,8 @@ var(--font-base); }
 .fondo-app { background: 
   var(--app-bg); }
 
------------------- LOGO ------------------ 
----Logo usado en las páginas de formulario 
+/* ------------------ LOGO ------------------ */
+/* Logo usado en las páginas de formulario */
 .form-logo-container {
   display: flex; justify-content: center; margin-top: 1.25rem;
 }

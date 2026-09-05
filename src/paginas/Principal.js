@@ -7,28 +7,23 @@ import {
   IonCardContent
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import { obtenerUsuario, obtenerTransacciones } from '../almacenamiento';
+import { getUsuario, getTransacciones } from '../services/storage/storageService';
+import { calculateIncome, calculateExpenses } from '../utils/financial';
+import { formatCurrency } from '../utils/format';
 
 export default function Principal() {
   const history = useHistory();
-  const usuario = obtenerUsuario() || 'Usuario';
-  const transacciones = obtenerTransacciones();
+  const usuario = getUsuario() || 'Usuario';
+  const transacciones = getTransacciones();
 
-  const ingresos = transacciones
-    .filter(t => t.tipo === 'ingreso')
-    .reduce((a, b) => a + b.monto, 0);
-
-  const gastos = transacciones
-    .filter(t => t.tipo === 'gasto')
-    .reduce((a, b) => a + b.monto, 0);
-
+  const ingresos = calculateIncome(transacciones);
+  const gastos = calculateExpenses(transacciones);
   const balanceNegativo = gastos > ingresos;
 
   return (
     <IonPage>
       <IonContent className="fondo-app">
 
-        {/* Logo y título */}
         <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
           <img
             src="/imagenes/logo.png.png"
@@ -59,7 +54,7 @@ export default function Principal() {
             <IonCardContent>
               <p className="titulo-tarjeta">Ingresos totales</p>
               <p className="monto ingreso">
-                ${ingresos.toLocaleString()}
+                {formatCurrency(ingresos)}
               </p>
             </IonCardContent>
           </IonCard>
@@ -68,7 +63,7 @@ export default function Principal() {
             <IonCardContent>
               <p className="titulo-tarjeta">Gastos totales</p>
               <p className="monto gasto">
-                ${gastos.toLocaleString()}
+                {formatCurrency(gastos)}
               </p>
             </IonCardContent>
           </IonCard>
@@ -96,4 +91,3 @@ export default function Principal() {
     </IonPage>
   );
 }
-
