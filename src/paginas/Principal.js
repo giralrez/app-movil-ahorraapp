@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonCard,
-  IonCardContent
-} from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { getUsuario, getTransacciones } from '../services/storage/storageService';
 import { calculateIncome, calculateExpenses } from '../utils/financial';
-import { formatCurrency } from '../utils/format';
+import { Button, Card, FinancialMetric } from '../components/ui';
 
 export default function Principal() {
   const history = useHistory();
@@ -39,52 +33,38 @@ export default function Principal() {
         <div className="salud-header">
           <h2 className="titulo-seccion">Mi salud financiera</h2>
 
-          <IonButton
+          <Button
+            variant="primary"
             size="small"
-            className="boton-vermas"
             onClick={() => history.push('/salud')}
           >
             Ver más
-          </IonButton>
+          </Button>
         </div>
 
         <div className="contenedor-tarjetas">
-
-          <IonCard className="card-blanca">
-            <IonCardContent>
-              <p className="titulo-tarjeta">Ingresos totales</p>
-              <p className="monto ingreso">
-                {formatCurrency(ingresos)}
-              </p>
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard className="card-blanca">
-            <IonCardContent>
-              <p className="titulo-tarjeta">Gastos totales</p>
-              <p className="monto gasto">
-                {formatCurrency(gastos)}
-              </p>
-            </IonCardContent>
-          </IonCard>
-
+          <Card>
+            <FinancialMetric label="Ingresos totales" value={ingresos} variant="income" />
+          </Card>
+          <Card>
+            <FinancialMetric label="Gastos totales" value={gastos} variant="expense" />
+          </Card>
         </div>
 
         <div className="botones-acciones">
-          <IonButton className="btn-ingreso" onClick={() => history.push('/ingreso')}>
+          <Button variant="income" block onClick={() => history.push('/ingreso')}>
             + Añadir Ingreso
-          </IonButton>
+          </Button>
 
-          <IonButton className="btn-gasto" onClick={() => history.push('/gasto')}>
+          <Button variant="expense" block onClick={() => history.push('/gasto')}>
             + Añadir Gasto
-          </IonButton>
+          </Button>
         </div>
+
         {balanceNegativo && (
-          <IonCard className="alerta-card">
-            <IonCardContent>
-              ⚠️ Tus gastos superan tus ingresos. ¡Cuidado con el sobreendeudamiento!
-            </IonCardContent>
-          </IonCard>
+          <Card variant="alert">
+            ⚠️ Tus gastos superan tus ingresos. ¡Cuidado con el sobreendeudamiento!
+          </Card>
         )}
 
       </IonContent>

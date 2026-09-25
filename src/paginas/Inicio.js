@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import {
-  IonPage,
-  IonContent,
-  IonInput,
-  IonButton,
-  IonText
-} from "@ionic/react";
+import { IonPage, IonContent, IonText } from "@ionic/react";
 import { setUsuario } from "../services/storage/storageService";
 import { useHistory } from "react-router-dom";
-
+import { Button, Input } from "../components/ui";
 
 export default function Inicio() {
   const [nombre, setNombre] = useState("");
+  const [error, setError] = useState("");
   const history = useHistory();
 
   const guardar = () => {
     if (!nombre.trim()) {
-      alert("Por favor ingrese su nombre.");
+      setError("Por favor ingrese su nombre.");
       return;
     }
+    setError("");
     setUsuario(nombre.trim());
     history.push("/principal");
   };
@@ -42,25 +38,23 @@ export default function Inicio() {
             </IonText>
 
             <div className="inicio-input-contenedor">
-              <IonInput
+              <Input
+                label="Nombre"
                 placeholder="Nombre"
                 value={nombre}
-                onIonChange={(e) => setNombre(e.detail.value ?? "")}
-                className="inicio-input"
+                onChange={(e) => {
+                  setNombre(e.target.value);
+                  if (error) setError("");
+                }}
+                error={error}
+                autoComplete="name"
               />
             </div>
 
-            <IonButton expand="block" onClick={guardar} className="inicio-boton">
+            <Button variant="primary" block onClick={guardar}>
               Guardar y continuar
-            </IonButton>
+            </Button>
           </div>
-        </div>
-        <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
-          <img
-            src="/imagenes/logo.png.png"
-            alt="AhorrApp logo"
-            style={{ width: "140px", marginBottom: "5px" }}
-          />
         </div>
       </IonContent>
     </IonPage>

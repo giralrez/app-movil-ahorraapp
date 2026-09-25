@@ -6,13 +6,15 @@ export default function Button({
   block = false,
   loading = false,
   children,
+  className,
   ...props
 }) {
   const clases = [
     'ahorr-btn',
     `ahorr-btn--${variant}`,
     block ? 'ahorr-btn--block' : '',
-    loading ? 'ahorr-btn--loading' : ''
+    loading ? 'ahorr-btn--loading' : '',
+    className || ''
   ].filter(Boolean).join(' ');
 
   return (

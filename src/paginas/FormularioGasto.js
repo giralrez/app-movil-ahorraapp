@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import {
-  IonPage, IonContent, IonItem, IonLabel, IonButton
-} from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import { addTransaction } from '../services/transactionService';
 import { CATEGORIAS_GASTO } from '../domain/transactions';
 import { useHistory } from 'react-router-dom';
+import { Button, Input, Select, AmountInput } from '../components/ui';
 
 export default function FormularioGasto() {
   const history = useHistory();
   const [categoria, setCategoria] = useState(CATEGORIAS_GASTO[0]);
   const [monto, setMonto] = useState('');
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
+  const [errorMonto, setErrorMonto] = useState('');
 
   const guardar = () => {
-    if (!monto) return alert('Ingrese un monto válido');
+    const numero = Number(monto);
+    if (!monto || !Number.isFinite(numero) || numero <= 0) {
+      setErrorMonto('Ingresa un monto válido mayor a cero');
+      return;
+    }
 
-    addTransaction({ tipo: 'gasto', categoria, monto: Number(monto), fecha });
+    setErrorMonto('');
+    addTransaction({ tipo: 'gasto', categoria, monto: numero, fecha });
     history.push('/principal');
   };
 
@@ -35,44 +40,33 @@ export default function FormularioGasto() {
 
         <div className="form-card">
 
-          <IonItem className="form-item">
-            <IonLabel position="stacked">Categoría</IonLabel>
+          <Select
+            label="Categoría"
+            options={CATEGORIAS_GASTO}
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          />
 
-            <select
-              className="select-simple"
-              value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
-            >
-              {CATEGORIAS_GASTO.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
-          </IonItem>
+          <AmountInput
+            label="Monto"
+            value={monto}
+            onChange={(valor) => {
+              setMonto(valor);
+              if (errorMonto) setErrorMonto('');
+            }}
+            error={errorMonto}
+          />
 
-          <IonItem className="form-item">
-            <IonLabel position="stacked">Monto</IonLabel>
-            <input
-              type="number"
-              className="input-simple"
-              placeholder="Monto"
-              value={monto}
-              onChange={(e) => setMonto(e.target.value)}
-            />
-          </IonItem>
+          <Input
+            label="Fecha"
+            type="date"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+          />
 
-          <IonItem className="form-item">
-            <IonLabel position="stacked">Fecha</IonLabel>
-            <input
-              type="date"
-              className="input-simple"
-              value={fecha}
-              onChange={(e) => setFecha(e.target.value)}
-            />
-          </IonItem>
-
-          <IonButton expand="block" className="btn-guardar" onClick={guardar}>
+          <Button variant="success" block onClick={guardar}>
             Guardar
-          </IonButton>
+          </Button>
 
         </div>
       </IonContent>
