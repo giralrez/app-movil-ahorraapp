@@ -1,5 +1,5 @@
-import React from 'react';
-import { formatCurrency } from '../../utils/format';
+import React, { useState } from 'react';
+import { formatAmount } from '../../utils/format';
 
 export default function AmountInput({
   label = 'Monto',
@@ -9,6 +9,7 @@ export default function AmountInput({
   id = 'monto',
   ...props
 }) {
+  const [enfocado, setEnfocado] = useState(false);
   const esInvalido = error || (value !== '' && !Number.isFinite(Number(value)));
 
   return (
@@ -22,7 +23,9 @@ export default function AmountInput({
         type="text"
         inputMode="decimal"
         placeholder="$ 0"
-        value={value === '' ? '' : formatCurrency(value)}
+        value={enfocado ? value : formatAmount(value)}
+        onFocus={() => setEnfocado(true)}
+        onBlur={() => setEnfocado(false)}
         onChange={(evento) => {
           const limpio = evento.target.value.replace(/[^\d.-]/g, '');
           onChange(limpio);

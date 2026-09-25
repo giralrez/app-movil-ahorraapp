@@ -3,7 +3,7 @@ import { IonPage, IonContent } from '@ionic/react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { getTransacciones } from '../services/storage/storageService';
 import { calculateIncome, calculateExpenses, montoNumerico } from '../utils/financial';
-import { Button, Card, EmptyState, FinancialMetric, TransactionItem } from '../components/ui';
+import { Button, Card, EmptyState, FinancialMetric, Icon, TransactionItem } from '../components/ui';
 
 export default function SaludDetalle() {
   const location = useLocation();
@@ -38,7 +38,13 @@ export default function SaludDetalle() {
     <IonPage>
       <IonContent className="ion-padding detalles-fondo">
 
-        <h2 style={{ textAlign: 'center', marginTop: '15px', marginBottom: '5px', fontWeight: 'bold' }}>
+        <div className="btn-volver">
+          <Button variant="ghost" block onClick={() => history.goBack()}>
+            <Icon nombre="chevronBack" aria-hidden="true" /> Volver
+          </Button>
+        </div>
+
+        <h2 className="pagina-titulo">
           Detalles de {esIngresos ? "Ingresos" : "Gastos"}
         </h2>
 
@@ -50,19 +56,13 @@ export default function SaludDetalle() {
           />
         </Card>
 
-        <div className="btn-volver">
-          <Button variant="ghost" block onClick={() => history.goBack()}>
-            ← Volver
-          </Button>
-        </div>
-
-        <h3 style={{ marginLeft: "15px", marginTop: "10px" }}>
+        <h3 className="seccion-subtitulo">
           Movimientos de {esIngresos ? "Ingresos" : "Gastos"}
         </h3>
 
         {lista.length === 0 ? (
           <EmptyState
-            icono={esIngresos ? "📥" : "📤"}
+            icono={esIngresos ? "receipt" : "documentText"}
             titulo="Sin movimientos"
             descripcion={`Aún no hay ${esIngresos ? "ingresos" : "gastos"} registrados.`}
           />

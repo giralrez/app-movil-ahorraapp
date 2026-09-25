@@ -1,4 +1,4 @@
-import { formatCurrency } from './format';
+import { formatCurrency, formatAmount } from './format';
 
 describe('formatCurrency', () => {
   test('formatea montos en COP', () => {
@@ -17,5 +17,21 @@ describe('formatCurrency', () => {
 
   test('formatea cero', () => {
     expect(formatCurrency(0)).toMatch(/0/);
+  });
+});
+
+describe('formatAmount', () => {
+  test('conserva decimales al formatear', () => {
+    expect(formatAmount(1234.5)).toMatch(/1\.234[,.]5/);
+  });
+
+  test('agrupa miles', () => {
+    expect(formatAmount(1000000)).toMatch(/1\.000\.000/);
+  });
+
+  test('devuelve vacio para valores invalidos', () => {
+    expect(formatAmount('')).toBe('');
+    expect(formatAmount(null)).toBe('');
+    expect(formatAmount('abc')).toBe('');
   });
 });

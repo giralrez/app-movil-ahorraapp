@@ -22,15 +22,15 @@ export default function Inicio() {
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding inicio-fondo">
-        <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
+        <div className="header-principal">
           <img
             src="/imagenes/logo.png.png"
             alt="AhorrApp logo"
-            style={{ width: "140px", marginBottom: "5px" }}
+            className="logo-app"
           />
         </div>
         <div className="inicio-contenedor">
-          <div className="inicio-card">
+          <div className="ahorr-card inicio-card">
             <h1 className="inicio-titulo">Bienvenido</h1>
 
             <IonText className="inicio-texto">

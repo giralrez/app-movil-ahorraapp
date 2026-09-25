@@ -16,8 +16,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 import './theme/tokens.css';
-import './theme/tema.css';
 import './components/ui/ui.css';
+import './theme/tema.css';
 
 // Habilita popovers, cámara, file picker, etc.
 import { defineCustomElements } from '@ionic/pwa-elements/loader';

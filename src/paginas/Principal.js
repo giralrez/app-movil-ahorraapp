@@ -3,7 +3,7 @@ import { IonPage, IonContent } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { getUsuario, getTransacciones } from '../services/storage/storageService';
 import { calculateIncome, calculateExpenses } from '../utils/financial';
-import { Button, Card, FinancialMetric } from '../components/ui';
+import { Button, Card, FinancialMetric, Icon } from '../components/ui';
 
 export default function Principal() {
   const history = useHistory();
@@ -18,11 +18,11 @@ export default function Principal() {
     <IonPage>
       <IonContent className="fondo-app">
 
-        <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
+        <div className="header-principal">
           <img
             src="/imagenes/logo.png.png"
             alt="AhorrApp logo"
-            style={{ width: "140px", marginBottom: "5px" }}
+            className="logo-app"
           />
         </div>
 
@@ -53,17 +53,17 @@ export default function Principal() {
 
         <div className="botones-acciones">
           <Button variant="income" block onClick={() => history.push('/ingreso')}>
-            + Añadir Ingreso
+            <Icon nombre="add" aria-hidden="true" /> Añadir Ingreso
           </Button>
 
           <Button variant="expense" block onClick={() => history.push('/gasto')}>
-            + Añadir Gasto
+            <Icon nombre="add" aria-hidden="true" /> Añadir Gasto
           </Button>
         </div>
 
         {balanceNegativo && (
           <Card variant="alert">
-            ⚠️ Tus gastos superan tus ingresos. ¡Cuidado con el sobreendeudamiento!
+            <Icon nombre="warning" aria-hidden="true" /> Tus gastos superan tus ingresos. ¡Cuidado con el sobreendeudamiento!
           </Card>
         )}
 

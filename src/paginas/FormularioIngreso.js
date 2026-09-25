@@ -3,7 +3,7 @@ import { IonPage, IonContent } from '@ionic/react';
 import { addTransaction } from '../services/transactionService';
 import { CATEGORIAS_INGRESO } from '../domain/transactions';
 import { useHistory } from 'react-router-dom';
-import { Button, Input, Select, AmountInput } from '../components/ui';
+import { Button, Input, Select, AmountInput, Icon } from '../components/ui';
 
 export default function FormularioIngreso() {
   const history = useHistory();
@@ -28,17 +28,23 @@ export default function FormularioIngreso() {
     <IonPage>
       <IonContent className="ion-padding">
 
-        <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
+        <div className="header-principal">
           <img
             src="/imagenes/logo.png.png"
             alt="AhorrApp logo"
-            style={{ width: "140px", marginBottom: "5px" }}
+            className="logo-app"
           />
+        </div>
+
+        <div className="btn-volver">
+          <Button variant="ghost" block onClick={() => history.goBack()}>
+            <Icon nombre="chevronBack" aria-hidden="true" /> Volver
+          </Button>
         </div>
 
         <h2 className="form-titulo">Añadir Ingreso</h2>
 
-        <div className="form-card">
+        <div className="ahorr-card form-card">
 
           <Select
             label="Categoría"

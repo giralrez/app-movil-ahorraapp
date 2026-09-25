@@ -7,6 +7,7 @@ export default function Button({
   loading = false,
   children,
   className,
+  disabled,
   ...props
 }) {
   const clases = [
@@ -20,7 +21,8 @@ export default function Button({
   return (
     <IonButton
       className={clases}
-      disabled={loading || props.disabled}
+      disabled={loading || disabled}
+      aria-busy={loading || undefined}
       {...props}
     >
       {loading ? <IonSpinner name="crescent" size="small" /> : children}
