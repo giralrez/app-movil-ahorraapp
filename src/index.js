@@ -15,6 +15,8 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
+import './theme/tokens.css';
+import './components/ui/ui.css';
 import './theme/tema.css';
 
 // Habilita popovers, cámara, file picker, etc.

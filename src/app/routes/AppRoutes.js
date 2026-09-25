@@ -11,12 +11,12 @@ import SaludDetalles from '../../paginas/SaludDetalles';
 export default function AppRoutes({ usuario }) {
   return (
     <Switch>
-      <Route path="/inicio" component={Inicio} />
-      <Route path="/principal" component={Principal} />
-      <Route path="/salud" component={SaludFinanciera} />
-      <Route path="/salud-detalles" component={SaludDetalles} />
-      <Route path="/ingreso" component={FormularioIngreso} />
-      <Route path="/gasto" component={FormularioGasto} />
+      <Route exact path="/inicio" component={Inicio} />
+      <Route exact path="/principal" component={Principal} />
+      <Route exact path="/salud-detalles" component={SaludDetalles} />
+      <Route exact path="/salud" component={SaludFinanciera} />
+      <Route exact path="/ingreso" component={FormularioIngreso} />
+      <Route exact path="/gasto" component={FormularioGasto} />
 
       <Redirect to={usuario ? "/principal" : "/inicio"} />
     </Switch>

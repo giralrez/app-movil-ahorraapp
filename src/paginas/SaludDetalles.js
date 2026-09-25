@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonText
-} from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { getTransacciones } from '../services/storage/storageService';
 import { calculateIncome, calculateExpenses, montoNumerico } from '../utils/financial';
-import { formatCurrency } from '../utils/format';
+import { Button, Card, EmptyState, FinancialMetric, Icon, TransactionItem } from '../components/ui';
 
 export default function SaludDetalle() {
   const location = useLocation();
@@ -43,66 +38,43 @@ export default function SaludDetalle() {
     <IonPage>
       <IonContent className="ion-padding detalles-fondo">
 
-        <h2
-          style={{
-            textAlign: 'center',
-            marginTop: '15px',
-            marginBottom: '5px',
-            fontWeight: 'bold'
-          }}
-        >
+        <div className="btn-volver">
+          <Button variant="ghost" block onClick={() => history.goBack()}>
+            <Icon nombre="chevronBack" aria-hidden="true" /> Volver
+          </Button>
+        </div>
+
+        <h2 className="pagina-titulo">
           Detalles de {esIngresos ? "Ingresos" : "Gastos"}
         </h2>
 
-        <div className="detalle-card encabezado-detalle">
-          <h2 className="titulo-detalle">
-            {esIngresos ? "Ingresos Totales" : "Gastos Totales"}
-          </h2>
+        <Card>
+          <FinancialMetric
+            label={esIngresos ? "Ingresos Totales" : "Gastos Totales"}
+            value={total}
+            variant={esIngresos ? "income" : "expense"}
+          />
+        </Card>
 
-          <IonText
-            className="total-detalle-grande"
-            style={{ color: esIngresos ? "#1EBD61" : "#E63946" }}
-          >
-            {formatCurrency(total)}
-          </IonText>
-        </div>
-
-        <div className="btn-volver">
-          <IonButton
-            expand="block"
-            color="medium"
-            onClick={() => history.goBack()}
-          >
-            ← Volver
-          </IonButton>
-        </div>
-
-        <h3 style={{ marginLeft: "15px", marginTop: "10px" }}>
+        <h3 className="seccion-subtitulo">
           Movimientos de {esIngresos ? "Ingresos" : "Gastos"}
         </h3>
 
         {lista.length === 0 ? (
-          <p style={{ textAlign: "center", marginTop: "30px", color: "#777" }}>
-            No hay movimientos registrados.
-          </p>
+          <EmptyState
+            icono={esIngresos ? "receipt" : "documentText"}
+            titulo="Sin movimientos"
+            descripcion={`Aún no hay ${esIngresos ? "ingresos" : "gastos"} registrados.`}
+          />
         ) : (
           lista.map((item, index) => (
-            <div className="mov-card" key={item.id || `${item.tipo}-${item.fecha}-${item.monto}-${index}`}>
-
-              <div className="mov-titulo">{item.categoria}</div>
-
-              <div className="mov-fecha">Fecha: {item.fecha}</div>
-
-              <IonText
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  color: esIngresos ? "#1EBD61" : "#E63946"
-                }}
-              >
-                {formatCurrency(item.monto)}
-              </IonText>
-            </div>
+            <TransactionItem
+              key={item.id || `${item.tipo}-${item.fecha}-${item.monto}-${index}`}
+              titulo={item.categoria}
+              fecha={`Fecha: ${item.fecha}`}
+              monto={item.monto}
+              tipo={item.tipo}
+            />
           ))
         )}
       </IonContent>
