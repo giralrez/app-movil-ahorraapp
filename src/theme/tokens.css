@@ -1,0 +1,98 @@
+/* ============================================================
+   AHORRAPP — DESIGN TOKENS
+   Fuente única de verdad para estilos visuales.
+   Capa 1: Primitivos → Capa 2: Semánticos → Capa 3: Componentes
+   ============================================================ */
+
+:root {
+  /* ---------- COLORES PRIMITIVOS ---------- */
+  --color-blue-300: #4c8dff;
+  --color-blue-400: #3f7cff;
+  --color-blue-500: #1e88e5;
+  --color-blue-600: #1565c0;
+  --color-green-400: #2ecc71;
+  --color-green-500: #27ae60;
+  --color-green-600: #0bb76d;
+  --color-green-700: #0a9f6b;
+  --color-red-400: #e74c3c;
+  --color-red-500: #e14c4c;
+  --color-red-600: #d43c3c;
+  --color-red-50: #ffecec;
+  --color-purple-500: #4527a0;
+  --color-purple-600: #6a2cff;
+  --color-purple-400: #b476ff;
+  --color-gray-50: #f5f8fa;
+  --color-gray-100: #f0f0f0;
+  --color-gray-200: #e0e0e0;
+  --color-gray-300: #d0d6db;
+  --color-gray-400: #dddddd;
+  --color-gray-500: #777777;
+  --color-gray-600: #666666;
+  --color-gray-700: #444444;
+  --color-gray-800: #222222;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ---------- COLORES SEMÁNTICOS ---------- */
+  --ion-color-primary: var(--color-blue-500);
+  --ion-color-success: var(--color-green-500);
+  --ion-color-danger: var(--color-red-400);
+
+  --app-bg: #f5f7fa;
+  --card-bg: var(--color-white);
+  --muted: var(--color-gray-600);
+  --text-dark: var(--color-gray-800);
+  --text-secondary: var(--color-gray-500);
+
+  /* Estados financieros */
+  --color-income: var(--color-green-700);
+  --color-income-soft: var(--color-green-400);
+  --color-expense: var(--color-red-500);
+  --color-expense-soft: var(--color-red-400);
+  --color-warning-bg: var(--color-red-50);
+  --color-warning-border: var(--color-red-500);
+
+  /* ---------- ESPACIADO ---------- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* ---------- BORDER RADIUS ---------- */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 25px;
+  --radius-round: 50%;
+
+  /* ---------- TIPOGRAFÍA ---------- */
+  --font-family: 'Poppins', Arial, sans-serif;
+  --font-base: 1rem;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: 2.25rem;
+
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* ---------- ELEVACIÓN ---------- */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.20);
+
+  /* ---------- MOTION ---------- */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+
+  /* ---------- TARGETS TÁCTILES ---------- */
+  --touch-target-min: 44px;
+}
