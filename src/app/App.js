@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { IonApp } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 import AppRoutes from './routes/AppRoutes';
-import { getUsuario } from '../services/storage/storageService';
+import { AppProvider } from './context/AppContext';
 
 export default function App() {
-  const [usuario, setUsuario] = useState('');
-
-  useEffect(() => {
-    setUsuario(getUsuario());
-  }, []);
-
   return (
     <IonApp>
-      <IonReactRouter>
-        <AppRoutes usuario={usuario} />
-      </IonReactRouter>
+      <AppProvider>
+        <IonReactRouter>
+          <AppRoutes />
+        </IonReactRouter>
+      </AppProvider>
     </IonApp>
   );
 }

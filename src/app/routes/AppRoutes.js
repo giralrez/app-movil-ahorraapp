@@ -7,8 +7,11 @@ import SaludFinanciera from '../../paginas/SaludFinanciera';
 import FormularioIngreso from '../../paginas/FormularioIngreso';
 import FormularioGasto from '../../paginas/FormularioGasto';
 import SaludDetalles from '../../paginas/SaludDetalles';
+import { useApp } from '../context/AppContext';
 
-export default function AppRoutes({ usuario }) {
+export default function AppRoutes() {
+  const { usuario } = useApp();
+
   return (
     <Switch>
       <Route exact path="/inicio" component={Inicio} />
