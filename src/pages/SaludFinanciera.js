@@ -9,6 +9,7 @@ import {
 
 import { useTransactions } from "../hooks/useTransactions";
 import { calculateIncome, calculateExpenses } from "../utils/financial";
+import { COLOR_INGRESO, COLOR_GASTO } from "../theme/paleta";
 import DoughnutChart from "../components/charts/DoughnutChart";
 import { Button, Card, EmptyState, FinancialMetric, Icon } from "../components/ui";
 import { useHistory } from "react-router-dom";
@@ -22,7 +23,7 @@ export default function SaludFinanciera() {
   const gastosTotal = calculateExpenses(transacciones);
 
   const valor = vista === "ingresos" ? ingresosTotal : gastosTotal;
-  const color = vista === "ingresos" ? "#2ecc71" : "#e74c3c";
+  const color = vista === "ingresos" ? COLOR_INGRESO : COLOR_GASTO;
   const label = vista === "ingresos" ? "Ingresos" : "Gastos";
   const sinDatos = transacciones.length === 0;
 

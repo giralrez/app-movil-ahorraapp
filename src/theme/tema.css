@@ -32,7 +32,7 @@ html, body {
   text-align: center;
   padding: var(--space-md);
   border-radius: var(--radius-lg);
-  font-size: 20px;
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   width: 90%;
   margin: 20px auto;
@@ -43,7 +43,7 @@ html, body {
   display: flex; justify-content: space-between; align-items: center;
   width: 90%; margin: 20px auto;
 }
-.titulo-seccion { font-size: 20px; font-weight: var(--font-weight-bold); }
+.titulo-seccion { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); }
 
 /* ------------------ TARJETAS EN PRINCIPAL ------------------ */
 .contenedor-tarjetas {
@@ -83,7 +83,7 @@ html, body {
 
 .salud-titulo {
   font-weight: var(--font-weight-bold);
-  font-size: 26px;
+  font-size: var(--font-size-2xl);
   margin-top: 10px;
   text-align: center;
 }
@@ -95,7 +95,7 @@ html, body {
   height: 48px;
   background: var(--color-gray-100);
   border: none;
-  font-size: 26px;
+  font-size: var(--font-size-2xl);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,7 +142,7 @@ html, body {
 
 .titulo-grafica {
   font-weight: var(--font-weight-bold);
-  font-size: 17px;
+  font-size: var(--font-size-base);
 }
 
 /* Contenedor para la gráfica (canvas) */
@@ -178,13 +178,13 @@ html, body {
   color: var(--color-purple-500);
   font-weight: var(--font-weight-bold);
   margin-bottom: 18px;
-  font-size: 30px;
+  font-size: var(--font-size-2xl);
 }
 
 .inicio-texto {
   display: block;
   color: var(--color-gray-700);
-  font-size: 18px;
+  font-size: var(--font-size-lg);
   margin-bottom: 14px;
 }
 

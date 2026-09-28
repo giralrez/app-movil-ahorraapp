@@ -26,7 +26,7 @@ export default function SaludDetalle() {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding detalles-fondo">
+      <IonContent className="ion-padding">
 
         <div className="btn-volver">
           <Button variant="ghost" block onClick={() => history.goBack()}>
