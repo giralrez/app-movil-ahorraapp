@@ -7,3 +7,5 @@ opencode.json
 # Configuración de agentes
 .opencode/
 .agents/
+
+skills-lock.json
