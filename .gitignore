@@ -3,3 +3,9 @@ build
 opencode.json
 .env
 .env.*
+
+# Configuración de agentes
+.opencode/
+.agents/
+
+skills-lock.json

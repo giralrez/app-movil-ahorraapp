@@ -1,14 +1,16 @@
 import React from 'react';
 import { IonPage, IonContent } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import { getUsuario, getTransacciones } from '../services/storage/storageService';
 import { calculateIncome, calculateExpenses } from '../utils/financial';
+import { useApp } from '../app/context/AppContext';
+import { useTransactions } from '../hooks/useTransactions';
 import { Button, Card, FinancialMetric, Icon } from '../components/ui';
 
 export default function Principal() {
   const history = useHistory();
-  const usuario = getUsuario() || 'Usuario';
-  const transacciones = getTransacciones();
+  const { usuario: nombreUsuario } = useApp();
+  const transacciones = useTransactions();
+  const usuario = nombreUsuario || 'Usuario';
 
   const ingresos = calculateIncome(transacciones);
   const gastos = calculateExpenses(transacciones);

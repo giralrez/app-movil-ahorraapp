@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { IonPage, IonContent } from '@ionic/react';
-import { addTransaction } from '../services/transactionService';
 import { CATEGORIAS_INGRESO } from '../domain/transactions';
 import { useHistory } from 'react-router-dom';
+import { useApp } from '../app/context/AppContext';
 import { Button, Input, Select, AmountInput, Icon } from '../components/ui';
 
 export default function FormularioIngreso() {
   const history = useHistory();
+  const { agregarTransaccion } = useApp();
   const [categoria, setCategoria] = useState(CATEGORIAS_INGRESO[0]);
   const [monto, setMonto] = useState('');
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
@@ -19,8 +20,13 @@ export default function FormularioIngreso() {
       return;
     }
 
+    const resultado = agregarTransaccion({ tipo: 'ingreso', categoria, monto: numero, fecha });
+    if (!resultado.ok) {
+      setErrorMonto(resultado.error);
+      return;
+    }
+
     setErrorMonto('');
-    addTransaction({ tipo: 'ingreso', categoria, monto: numero, fecha });
     history.push('/principal');
   };
 

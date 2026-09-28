@@ -1,12 +1,5 @@
-import { useState, useEffect } from 'react';
-import { getTransactions } from '../services/transactionService';
+import { useApp } from '../app/context/AppContext';
 
 export function useTransactions() {
-  const [transacciones, setTransacciones] = useState([]);
-
-  useEffect(() => {
-    setTransacciones(getTransactions());
-  }, []);
-
-  return transacciones;
+  return useApp().transacciones;
 }

@@ -1,42 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { IonPage, IonContent } from '@ionic/react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { getTransacciones } from '../services/storage/storageService';
-import { calculateIncome, calculateExpenses, montoNumerico } from '../utils/financial';
+import { montoNumerico } from '../utils/financial';
+import { useTransactions } from '../hooks/useTransactions';
 import { Button, Card, EmptyState, FinancialMetric, Icon, TransactionItem } from '../components/ui';
 
 export default function SaludDetalle() {
   const location = useLocation();
   const history = useHistory();
+  const transacciones = useTransactions();
   const queryParams = new URLSearchParams(location.search);
   const tipo = queryParams.get('tipo');
 
-  const [total, setTotal] = useState(0);
-  const [lista, setLista] = useState([]);
-
-  useEffect(() => {
-    const transacciones = getTransacciones() || [];
-
-    if (!tipo) {
-      setLista([]);
-      setTotal(0);
-      return;
-    }
+  const { lista, total } = useMemo(() => {
+    if (!tipo) return { lista: [], total: 0 };
 
     const tipoNormalizado = tipo === "ingresos" ? "ingreso" : tipo === "gastos" ? "gasto" : tipo.toLowerCase();
-    const filtrados = transacciones.filter((t) => t && t.tipo === tipoNormalizado);
-
-    setLista(filtrados);
-
+    const filtrados = (transacciones || []).filter((t) => t && t.tipo === tipoNormalizado);
     const totalCalculado = filtrados.reduce((acc, t) => acc + montoNumerico(t.monto), 0);
-    setTotal(totalCalculado);
-  }, [tipo]);
+
+    return { lista: filtrados, total: totalCalculado };
+  }, [transacciones, tipo]);
 
   const esIngresos = tipo === "ingresos";
 
   return (
     <IonPage>
-      <IonContent className="ion-padding detalles-fondo">
+      <IonContent className="ion-padding">
 
         <div className="btn-volver">
           <Button variant="ghost" block onClick={() => history.goBack()}>

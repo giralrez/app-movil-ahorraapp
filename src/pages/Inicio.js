@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { IonPage, IonContent, IonText } from "@ionic/react";
-import { setUsuario } from "../services/storage/storageService";
 import { useHistory } from "react-router-dom";
+import { useApp } from "../app/context/AppContext";
 import { Button, Input } from "../components/ui";
 
 export default function Inicio() {
   const [nombre, setNombre] = useState("");
   const [error, setError] = useState("");
+  const { guardarUsuario } = useApp();
   const history = useHistory();
 
   const guardar = () => {
@@ -15,7 +16,7 @@ export default function Inicio() {
       return;
     }
     setError("");
-    setUsuario(nombre.trim());
+    guardarUsuario(nombre.trim());
     history.push("/principal");
   };
 
