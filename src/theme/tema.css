@@ -1,0 +1,199 @@
+/* Base */
+* { box-sizing: border-box; }
+html, body {
+  font-family: var(--font-family);
+  font-size: var(--font-base);
+}
+
+/* Fondo general de la app (usado en página Principal) */
+.fondo-app { background: var(--app-bg); }
+
+/* ------------------ LOGO / HEADER ------------------ */
+.header-principal { text-align: center; margin-top: 15px; }
+.logo-app { width: 140px; margin-bottom: 5px; }
+
+/* ------------------ TÍTULOS DE PÁGINA ------------------ */
+.pagina-titulo {
+  text-align: center;
+  margin: 15px 0 5px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+}
+.seccion-subtitulo {
+  margin-left: var(--space-md);
+  margin-top: 10px;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ------------------ BIENVENIDA (Página Principal) ------------------ */
+.bienvenida-banner {
+  background: var(--color-blue-400);
+  color: var(--color-white);
+  text-align: center;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  width: 90%;
+  margin: 20px auto;
+}
+
+/* ------------------ SECCIÓN SALUD FINANCIERA ------------------ */
+.salud-header {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 90%; margin: 20px auto;
+}
+.titulo-seccion { font-size: 20px; font-weight: var(--font-weight-bold); }
+
+/* ------------------ TARJETAS EN PRINCIPAL ------------------ */
+.contenedor-tarjetas {
+  display: flex; flex-direction: column; gap: var(--space-md);
+  margin: 20px auto;
+}
+
+/* ------------------ BOTONES GRANDES (Principal) ------------------ */
+.botones-acciones {
+  width: 90%; margin: 20px auto;
+  display: flex; flex-direction: column; gap: 14px;
+  align-items: center;
+}
+
+/* ------------------ FORMULARIOS (Ingreso y Gasto) ------------------ */
+.form-titulo {
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-top: 0.9rem;
+}
+.form-card {
+  max-width: 48rem;
+  margin: 2.5rem auto;
+}
+
+/* Botón volver */
+.btn-volver {
+  width: 90%; margin: auto; margin-top: 15px;
+}
+
+/* ------------------ SALUD FINANCIERA (SaludFinanciera.js) ------------------ */
+.salud-fondo {
+  background-color: var(--app-bg);
+  min-height: 100vh;
+}
+
+.salud-titulo {
+  font-weight: var(--font-weight-bold);
+  font-size: 26px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Flechas para cambiar vista */
+.flecha-cambio {
+  border-radius: var(--radius-round);
+  width: 48px;
+  height: 48px;
+  background: var(--color-gray-100);
+  border: none;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-700);
+  box-shadow: var(--shadow-md);
+}
+
+.flecha-cambio:hover {
+  background: var(--color-gray-200);
+}
+
+.flecha-cambio:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Contenedor principal con flechas y tarjeta */
+.contenedor-vista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  margin-top: 25px;
+}
+
+/* Tarjeta con gráfica */
+.tarjeta-grafica {
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  margin-top: 30px;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header de tarjeta de gráfica */
+.header-grafica {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.titulo-grafica {
+  font-weight: var(--font-weight-bold);
+  font-size: 17px;
+}
+
+/* Contenedor para la gráfica (canvas) */
+.contenedor-canvas {
+  width: 100%;
+  height: 280px;
+}
+
+/* ------------------ PÁGINA DE INICIO (Inicio.js) ------------------ */
+.inicio-fondo {
+  background-color: var(--color-white);
+  height: 100%;
+  min-height: 100vh;
+}
+
+.inicio-contenedor {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -30px;
+}
+
+.inicio-card {
+  max-width: 550px;
+  padding: 40px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+}
+
+.inicio-titulo {
+  color: var(--color-purple-500);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 18px;
+  font-size: 30px;
+}
+
+.inicio-texto {
+  display: block;
+  color: var(--color-gray-700);
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.inicio-input-contenedor {
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 420px) {
+  .form-card { margin: 1.25rem 1rem; padding: 1rem; }
+}

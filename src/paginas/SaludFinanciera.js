@@ -1,79 +1,35 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   IonPage,
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent,
-  IonButton
+  IonContent
 } from "@ionic/react";
 
-import { obtenerTransacciones } from "../almacenamiento";
-import Chart from "chart.js/auto";
+import { useTransactions } from "../hooks/useTransactions";
+import { calculateIncome, calculateExpenses } from "../utils/financial";
+import DoughnutChart from "../components/charts/DoughnutChart";
+import { Button, Card, EmptyState, FinancialMetric, Icon } from "../components/ui";
 import { useHistory } from "react-router-dom";
-
-
 
 export default function SaludFinanciera() {
   const history = useHistory();
   const [vista, setVista] = useState("ingresos");
-  const [transacciones, setTransacciones] = useState([]);
+  const transacciones = useTransactions();
 
-  const canvasRef = useRef(null);
-  const chartRef = useRef(null);
+  const ingresosTotal = calculateIncome(transacciones);
+  const gastosTotal = calculateExpenses(transacciones);
 
-  //  CARGA DE DATOS
-  useEffect(() => {
-    setTransacciones(obtenerTransacciones());
-  }, []);
+  const valor = vista === "ingresos" ? ingresosTotal : gastosTotal;
+  const color = vista === "ingresos" ? "#2ecc71" : "#e74c3c";
+  const label = vista === "ingresos" ? "Ingresos" : "Gastos";
+  const sinDatos = transacciones.length === 0;
 
-  const ingresosTotal = transacciones
-    .filter((t) => t.tipo === "ingreso")
-    .reduce((s, t) => s + Number(t.monto), 0);
-
-  const gastosTotal = transacciones
-    .filter((t) => t.tipo === "gasto")
-    .reduce((s, t) => s + Number(t.monto), 0);
-
-  //   CONFIGURAR GRÁFICO
-  const actualizarGrafico = () => {
-    if (!canvasRef.current) return;
-    if (chartRef.current) chartRef.current.destroy();
-
-    const valor = vista === "ingresos" ? ingresosTotal : gastosTotal;
-    const color = vista === "ingresos" ? "#2ecc71" : "#e74c3c";
-    const label = vista === "ingresos" ? "Ingresos" : "Gastos";
-
-    chartRef.current = new Chart(canvasRef.current, {
-      type: "doughnut",
-      data: {
-        labels: [label],
-        datasets: [
-          {
-            data: [valor],
-            backgroundColor: [color]
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: "70%"
-      }
-    });
-  };
-
-  useEffect(() => {
-    actualizarGrafico();
-  }, [vista, transacciones]);
-
- 
-  //   CAMBIAR VISTA}
   const cambiarVista = () => {
     setVista(vista === "ingresos" ? "gastos" : "ingresos");
   };
 
-  //      UI
   return (
     <IonPage>
       <IonHeader>
@@ -83,52 +39,62 @@ export default function SaludFinanciera() {
       </IonHeader>
 
       <IonContent className="ion-padding salud-fondo">
-        
-        {/* TARJETA CENTRAL CON FLECHAS */}
+
+        <div className="btn-volver">
+          <Button variant="ghost" block onClick={() => history.push('/principal')}>
+            <Icon nombre="chevronBack" aria-hidden="true" /> Volver
+          </Button>
+        </div>
+
         <div className="contenedor-vista">
-          <button className="flecha-cambio" onClick={cambiarVista}>
-            ‹
+          <button className="flecha-cambio" onClick={cambiarVista} aria-label="Ver gastos" disabled={sinDatos}>
+            <Icon nombre="chevronBack" aria-hidden="true" />
           </button>
 
-          <div className="tarjeta-blanca">
-            <h2 className="titulo-tarjeta-total">
-              {vista === "ingresos" ? "Ingresos Totales" : "Gastos Totales"}
-            </h2>
+          <Card>
+            <FinancialMetric
+              label={vista === "ingresos" ? "Ingresos Totales" : "Gastos Totales"}
+              value={valor}
+              variant={vista === "ingresos" ? "income" : "expense"}
+            />
+          </Card>
 
-            <p
-              className={`valor-total ${
-                vista === "ingresos" ? "valor-ingresos" : "valor-gastos"
-              }`}
-            >
-              $
-              {(vista === "ingresos" ? ingresosTotal : gastosTotal).toLocaleString()}
-            </p>
-          </div>
-
-          <button className="flecha-cambio" onClick={cambiarVista}>
-            ›
+          <button className="flecha-cambio" onClick={cambiarVista} aria-label="Ver ingresos" disabled={sinDatos}>
+            <Icon nombre="chevronForward" aria-hidden="true" />
           </button>
         </div>
 
-        {/* TARJETA CON GRÁFICA */}
-        <div className="tarjeta-grafica">
+        <div className="ahorr-card tarjeta-grafica">
           <div className="header-grafica">
             <strong className="titulo-grafica">
               MIS {vista.toUpperCase()}
             </strong>
 
-            <IonButton
-              color="primary"
-              fill="clear"
+            <Button
+              variant="ghost"
+              size="small"
               onClick={() => history.push(`/salud-detalles?tipo=${vista}`)}
             >
               Ver detalles
-            </IonButton>
+            </Button>
           </div>
 
-          <div className="contenedor-canvas">
-            <canvas ref={canvasRef}></canvas>
-          </div>
+          {sinDatos ? (
+            <EmptyState
+              icono="wallet"
+              titulo="Sin movimientos"
+              descripcion="Registra tu primer ingreso o gasto para ver tu salud financiera."
+              accion={
+                <Button variant="primary" onClick={() => history.push('/ingreso')}>
+                  Añadir ingreso
+                </Button>
+              }
+            />
+          ) : (
+            <div className="contenedor-canvas">
+              <DoughnutChart valor={valor} color={color} label={label} />
+            </div>
+          )}
         </div>
       </IonContent>
     </IonPage>

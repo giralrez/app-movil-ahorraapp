@@ -1,39 +1,28 @@
 import React from 'react';
-import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonCard,
-  IonCardContent
-} from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import { obtenerUsuario, obtenerTransacciones } from '../almacenamiento';
+import { getUsuario, getTransacciones } from '../services/storage/storageService';
+import { calculateIncome, calculateExpenses } from '../utils/financial';
+import { Button, Card, FinancialMetric, Icon } from '../components/ui';
 
 export default function Principal() {
   const history = useHistory();
-  const usuario = obtenerUsuario() || 'Usuario';
-  const transacciones = obtenerTransacciones();
+  const usuario = getUsuario() || 'Usuario';
+  const transacciones = getTransacciones();
 
-  const ingresos = transacciones
-    .filter(t => t.tipo === 'ingreso')
-    .reduce((a, b) => a + b.monto, 0);
-
-  const gastos = transacciones
-    .filter(t => t.tipo === 'gasto')
-    .reduce((a, b) => a + b.monto, 0);
-
+  const ingresos = calculateIncome(transacciones);
+  const gastos = calculateExpenses(transacciones);
   const balanceNegativo = gastos > ingresos;
 
   return (
     <IonPage>
       <IonContent className="fondo-app">
 
-        {/* Logo y título */}
-        <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
+        <div className="header-principal">
           <img
             src="/imagenes/logo.png.png"
             alt="AhorrApp logo"
-            style={{ width: "140px", marginBottom: "5px" }}
+            className="logo-app"
           />
         </div>
 
@@ -44,56 +33,41 @@ export default function Principal() {
         <div className="salud-header">
           <h2 className="titulo-seccion">Mi salud financiera</h2>
 
-          <IonButton
+          <Button
+            variant="primary"
             size="small"
-            className="boton-vermas"
             onClick={() => history.push('/salud')}
           >
             Ver más
-          </IonButton>
+          </Button>
         </div>
 
         <div className="contenedor-tarjetas">
-
-          <IonCard className="card-blanca">
-            <IonCardContent>
-              <p className="titulo-tarjeta">Ingresos totales</p>
-              <p className="monto ingreso">
-                ${ingresos.toLocaleString()}
-              </p>
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard className="card-blanca">
-            <IonCardContent>
-              <p className="titulo-tarjeta">Gastos totales</p>
-              <p className="monto gasto">
-                ${gastos.toLocaleString()}
-              </p>
-            </IonCardContent>
-          </IonCard>
-
+          <Card>
+            <FinancialMetric label="Ingresos totales" value={ingresos} variant="income" />
+          </Card>
+          <Card>
+            <FinancialMetric label="Gastos totales" value={gastos} variant="expense" />
+          </Card>
         </div>
 
         <div className="botones-acciones">
-          <IonButton className="btn-ingreso" onClick={() => history.push('/ingreso')}>
-            + Añadir Ingreso
-          </IonButton>
+          <Button variant="income" block onClick={() => history.push('/ingreso')}>
+            <Icon nombre="add" aria-hidden="true" /> Añadir Ingreso
+          </Button>
 
-          <IonButton className="btn-gasto" onClick={() => history.push('/gasto')}>
-            + Añadir Gasto
-          </IonButton>
+          <Button variant="expense" block onClick={() => history.push('/gasto')}>
+            <Icon nombre="add" aria-hidden="true" /> Añadir Gasto
+          </Button>
         </div>
+
         {balanceNegativo && (
-          <IonCard className="alerta-card">
-            <IonCardContent>
-              ⚠️ Tus gastos superan tus ingresos. ¡Cuidado con el sobreendeudamiento!
-            </IonCardContent>
-          </IonCard>
+          <Card variant="alert">
+            <Icon nombre="warning" aria-hidden="true" /> Tus gastos superan tus ingresos. ¡Cuidado con el sobreendeudamiento!
+          </Card>
         )}
 
       </IonContent>
     </IonPage>
   );
 }
-

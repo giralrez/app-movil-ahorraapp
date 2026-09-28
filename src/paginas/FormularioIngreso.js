@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import {
-  IonPage, IonContent, IonItem, IonLabel, IonButton
-} from '@ionic/react';
-import { obtenerTransacciones, guardarTransacciones } from '../almacenamiento';
+import { IonPage, IonContent } from '@ionic/react';
+import { addTransaction } from '../services/transactionService';
+import { CATEGORIAS_INGRESO } from '../domain/transactions';
 import { useHistory } from 'react-router-dom';
+import { Button, Input, Select, AmountInput, Icon } from '../components/ui';
 
 export default function FormularioIngreso() {
   const history = useHistory();
-  const [categoria, setCategoria] = useState('Salario');
+  const [categoria, setCategoria] = useState(CATEGORIAS_INGRESO[0]);
   const [monto, setMonto] = useState('');
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
+  const [errorMonto, setErrorMonto] = useState('');
 
   const guardar = () => {
-    if (!monto) return alert('Ingrese un monto válido');
+    const numero = Number(monto);
+    if (!monto || !Number.isFinite(numero) || numero <= 0) {
+      setErrorMonto('Ingresa un monto válido mayor a cero');
+      return;
+    }
 
-    const lista = obtenerTransacciones();
-    lista.push({ tipo: 'ingreso', categoria, monto: Number(monto), fecha });
-    guardarTransacciones(lista);
+    setErrorMonto('');
+    addTransaction({ tipo: 'ingreso', categoria, monto: numero, fecha });
     history.push('/principal');
   };
 
@@ -24,57 +28,51 @@ export default function FormularioIngreso() {
     <IonPage>
       <IonContent className="ion-padding">
 
-        <div className="header-principal" style={{ textAlign: "center", marginTop: "15px" }}>
+        <div className="header-principal">
           <img
             src="/imagenes/logo.png.png"
             alt="AhorrApp logo"
-            style={{ width: "140px", marginBottom: "5px" }}
+            className="logo-app"
           />
+        </div>
+
+        <div className="btn-volver">
+          <Button variant="ghost" block onClick={() => history.goBack()}>
+            <Icon nombre="chevronBack" aria-hidden="true" /> Volver
+          </Button>
         </div>
 
         <h2 className="form-titulo">Añadir Ingreso</h2>
 
-        <div className="form-card">
+        <div className="ahorr-card form-card">
 
-          <IonItem className="form-item">
-            <IonLabel position="stacked">Categoría</IonLabel>
+          <Select
+            label="Categoría"
+            options={CATEGORIAS_INGRESO}
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          />
 
-            <select
-              className="select-simple"
-              value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
-            >
-              <option value="Salario">Salario</option>
-              <option value="Venta">Venta</option>
-              <option value="Otro">Otro</option>
-            </select>
-          </IonItem>
+          <AmountInput
+            label="Monto"
+            value={monto}
+            onChange={(valor) => {
+              setMonto(valor);
+              if (errorMonto) setErrorMonto('');
+            }}
+            error={errorMonto}
+          />
 
-          <IonItem className="form-item">
-            <IonLabel position="stacked">Monto</IonLabel>
-            <input
-              type="number"
-              className="input-simple"
-              placeholder="Monto"
-              value={monto}
-              onChange={(e) => setMonto(e.target.value)}
-            />
-          </IonItem>
+          <Input
+            label="Fecha"
+            type="date"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+          />
 
-          <IonItem className="form-item">
-            <IonLabel position="stacked">Fecha</IonLabel>
-            <input
-              type="date"
-              className="input-simple"
-              value={fecha}
-              onChange={(e) => setFecha(e.target.value)}
-            />
-          </IonItem>
-
-       
-          <IonButton expand="block" className="btn-guardar" onClick={guardar}>
+          <Button variant="success" block onClick={guardar}>
             Guardar
-          </IonButton>
+          </Button>
 
         </div>
       </IonContent>
