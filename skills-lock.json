@@ -7,6 +7,12 @@
       "skillPath": "skills/accessibility-review/SKILL.md",
       "computedHash": "c274d0103d4313e80817a7718f7b164c1fe573a20f884b7f3ef2a526087796ff"
     },
+    "data-analyst": {
+      "source": "ailabs-393/ai-labs-claude-skills",
+      "sourceType": "github",
+      "skillPath": "packages/skills/data-analyst/SKILL.md",
+      "computedHash": "7c438d04536efefdf05d75287835b8b8649bce678ee01e12317065bd9e98752e"
+    },
     "design-system": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "sourceType": "github",
