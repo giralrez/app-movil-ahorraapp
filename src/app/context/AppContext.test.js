@@ -84,7 +84,6 @@ describe('AppContext', () => {
     expect(resultado.ok).toBe(true);
     expect(transactionService.addTransaction).toHaveBeenCalled();
     expect(obtenerContexto().transacciones).toEqual([{ tipo: 'gasto', monto: 20 }]);
-    expect(obtenerContexto().error).toBeNull();
   });
 
   test('agregarTransaccion expone error si el servicio falla', () => {
@@ -100,7 +99,6 @@ describe('AppContext', () => {
 
     expect(resultado.ok).toBe(false);
     expect(resultado.error).toBe('Transacción inválida');
-    expect(obtenerContexto().error).toBe('Transacción inválida');
   });
 
   test('useApp lanza error sin AppProvider', () => {

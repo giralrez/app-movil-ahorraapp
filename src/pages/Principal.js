@@ -3,11 +3,13 @@ import { IonPage, IonContent } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { calculateIncome, calculateExpenses } from '../utils/financial';
 import { useApp } from '../app/context/AppContext';
+import { useTransactions } from '../hooks/useTransactions';
 import { Button, Card, FinancialMetric, Icon } from '../components/ui';
 
 export default function Principal() {
   const history = useHistory();
-  const { usuario: nombreUsuario, transacciones } = useApp();
+  const { usuario: nombreUsuario } = useApp();
+  const transacciones = useTransactions();
   const usuario = nombreUsuario || 'Usuario';
 
   const ingresos = calculateIncome(transacciones);

@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import { IonPage, IonContent } from '@ionic/react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { montoNumerico } from '../utils/financial';
-import { useApp } from '../app/context/AppContext';
+import { useTransactions } from '../hooks/useTransactions';
 import { Button, Card, EmptyState, FinancialMetric, Icon, TransactionItem } from '../components/ui';
 
 export default function SaludDetalle() {
   const location = useLocation();
   const history = useHistory();
-  const { transacciones } = useApp();
+  const transacciones = useTransactions();
   const queryParams = new URLSearchParams(location.search);
   const tipo = queryParams.get('tipo');
 

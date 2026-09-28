@@ -7,7 +7,6 @@ const AppContext = createContext(null);
 export function AppProvider({ children }) {
   const [usuario, setUsuario] = useState(() => getUsuario());
   const [transacciones, setTransacciones] = useState(() => getTransactions());
-  const [error, setError] = useState(null);
 
   const guardarUsuario = (nombre) => {
     setUsuarioStorage(nombre);
@@ -18,23 +17,17 @@ export function AppProvider({ children }) {
     try {
       const creada = addTransaction(datos);
       setTransacciones(getTransactions());
-      setError(null);
       return { ok: true, transaccion: creada };
     } catch (e) {
-      setError(e.message);
       return { ok: false, error: e.message };
     }
   };
-
-  const limpiarError = () => setError(null);
 
   const valor = {
     usuario,
     guardarUsuario,
     transacciones,
-    agregarTransaccion,
-    error,
-    limpiarError
+    agregarTransaccion
   };
 
   return <AppContext.Provider value={valor}>{children}</AppContext.Provider>;
