@@ -197,3 +197,35 @@ html, body {
 @media (max-width: 420px) {
   .form-card { margin: 1.25rem 1rem; padding: 1rem; }
 }
+
+/* ------------------ DASHBOARD (Principal, Feature 003) ------------------ */
+.dashboard {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--space-md) var(--space-lg);
+  box-sizing: border-box;
+}
+
+.dashboard .contenedor-tarjetas { margin: var(--space-md) 0; }
+.dashboard .botones-acciones { width: 100%; margin: var(--space-md) 0; }
+
+@media (min-width: 768px) {
+  .dashboard .contenedor-tarjetas {
+    flex-direction: row;
+  }
+  .dashboard .contenedor-tarjetas > * { flex: 1; }
+}
+
+.dashboard__periodo-info {
+  font-size: var(--font-size-xs);
+  color: var(--muted);
+  margin: 0 0 var(--space-sm);
+  text-align: center;
+}
+
+.dashboard .ahorr-card {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
