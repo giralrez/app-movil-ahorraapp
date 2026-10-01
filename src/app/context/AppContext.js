@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { getUsuario, setUsuario as setUsuarioStorage } from '../../services/storage/storageService';
-import { getTransactions, addTransaction } from '../../services/transactionService';
+import { getTransactions, addTransaction, updateTransaction, deleteTransaction } from '../../services/transactionService';
 
 const AppContext = createContext(null);
 
@@ -23,11 +23,33 @@ export function AppProvider({ children }) {
     }
   };
 
+  const actualizarTransaccion = (id, cambios) => {
+    try {
+      const actualizada = updateTransaction(id, cambios);
+      setTransacciones(getTransactions());
+      return { ok: true, transaccion: actualizada };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  };
+
+  const eliminarTransaccion = (id) => {
+    try {
+      deleteTransaction(id);
+      setTransacciones(getTransactions());
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  };
+
   const valor = {
     usuario,
     guardarUsuario,
     transacciones,
-    agregarTransaccion
+    agregarTransaccion,
+    actualizarTransaccion,
+    eliminarTransaccion
   };
 
   return <AppContext.Provider value={valor}>{children}</AppContext.Provider>;

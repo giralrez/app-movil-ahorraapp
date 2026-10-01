@@ -4,8 +4,8 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Inicio from '../../pages/Inicio';
 import Principal from '../../pages/Principal';
 import SaludFinanciera from '../../pages/SaludFinanciera';
-import FormularioIngreso from '../../pages/FormularioIngreso';
-import FormularioGasto from '../../pages/FormularioGasto';
+import FormularioMovimiento from '../../pages/FormularioMovimiento';
+import Historial from '../../pages/Historial';
 import SaludDetalles from '../../pages/SaludDetalles';
 import { useApp } from '../context/AppContext';
 
@@ -18,8 +18,18 @@ export default function AppRoutes() {
       <Route exact path="/principal" component={Principal} />
       <Route exact path="/salud-detalles" component={SaludDetalles} />
       <Route exact path="/salud" component={SaludFinanciera} />
-      <Route exact path="/ingreso" component={FormularioIngreso} />
-      <Route exact path="/gasto" component={FormularioGasto} />
+      <Route exact path="/historial" component={Historial} />
+      <Route exact path="/movimiento" component={FormularioMovimiento} />
+      <Route
+        exact
+        path="/ingreso"
+        render={(props) => <FormularioMovimiento {...props} tipoInicial="ingreso" />}
+      />
+      <Route
+        exact
+        path="/gasto"
+        render={(props) => <FormularioMovimiento {...props} tipoInicial="gasto" />}
+      />
 
       <Redirect to={usuario ? "/principal" : "/inicio"} />
     </Switch>

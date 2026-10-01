@@ -282,3 +282,83 @@
 @media (max-width: 400px) {
   .ahorr-periodo__fechas { grid-template-columns: 1fr; }
 }
+
+/* ------------------ HISTORIAL (Feature 004) ------------------ */
+.ahorr-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.ahorr-card__header .ahorr-card__titulo { margin: 0; }
+
+.ahorr-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ahorr-filtros .ahorr-field { margin-bottom: 0; }
+
+.ahorr-filtros__doble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.ahorr-filtros__doble .ahorr-field { margin-bottom: 0; }
+
+.ahorr-lista-info {
+  font-size: var(--font-size-xs);
+  color: var(--muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.ahorr-historial {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ahorr-historial-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.ahorr-historial-item__detalle {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+  margin: 0;
+}
+
+.ahorr-historial-item__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+@media (max-width: 400px) {
+  .ahorr-filtros__doble { grid-template-columns: 1fr; }
+}
+
+.ahorr-lista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.ahorr-lista-header .ahorr-lista-info { margin: 0; }
+
+.ahorr-empty-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
