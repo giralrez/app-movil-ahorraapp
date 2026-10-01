@@ -200,3 +200,85 @@
 }
 
 .ahorr-state--error .ahorr-state__title { color: var(--color-expense); }
+
+/* ------------------ DASHBOARD (Feature 003) ------------------ */
+.ahorr-periodo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ahorr-periodo__fechas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.ahorr-periodo__fechas .ahorr-field { margin-bottom: 0; }
+
+.ahorr-periodo__aviso {
+  font-size: var(--font-size-xs);
+  color: var(--muted);
+  margin: 0;
+}
+
+.ahorr-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+}
+
+.ahorr-balance { text-align: center; }
+
+.ahorr-balance__label {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ahorr-balance__value {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-dark);
+  margin: var(--space-xs) 0;
+}
+
+.ahorr-balance__value--negative { color: var(--color-expense); }
+
+.ahorr-balance__caption {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ahorr-savings-rate__value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-dark);
+  margin: var(--space-md) 0 0;
+}
+
+.ahorr-savings-rate__value--negative { color: var(--color-expense); }
+
+.ahorr-card__titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-dark);
+  margin: 0 0 var(--space-md);
+}
+
+.ahorr-chart {
+  position: relative;
+  height: 220px;
+}
+
+.ahorr-ultimas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+@media (max-width: 400px) {
+  .ahorr-periodo__fechas { grid-template-columns: 1fr; }
+}
