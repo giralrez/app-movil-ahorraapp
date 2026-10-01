@@ -9,7 +9,9 @@ jest.mock('../../services/storage/storageService', () => ({
 
 jest.mock('../../services/transactionService', () => ({
   getTransactions: jest.fn(),
-  addTransaction: jest.fn()
+  addTransaction: jest.fn(),
+  updateTransaction: jest.fn(),
+  deleteTransaction: jest.fn()
 }));
 
 import { act } from 'react';
@@ -99,6 +101,35 @@ describe('AppContext', () => {
 
     expect(resultado.ok).toBe(false);
     expect(resultado.error).toBe('Transacción inválida');
+  });
+
+  test('actualizarTransaccion persiste y refresca el estado', () => {
+    transactionService.updateTransaction.mockReturnValue({ id: 't1', monto: 75 });
+    transactionService.getTransactions.mockReturnValue([{ id: 't1', monto: 75 }]);
+    const { obtenerContexto } = montarProvider();
+
+    let resultado;
+    act(() => {
+      resultado = obtenerContexto().actualizarTransaccion('t1', { monto: 75 });
+    });
+
+    expect(resultado.ok).toBe(true);
+    expect(transactionService.updateTransaction).toHaveBeenCalledWith('t1', { monto: 75 });
+    expect(obtenerContexto().transacciones).toEqual([{ id: 't1', monto: 75 }]);
+  });
+
+  test('eliminarTransaccion quita la transacción del estado', () => {
+    transactionService.getTransactions.mockReturnValue([{ id: 't1' }, { id: 't2' }]);
+    const { obtenerContexto } = montarProvider();
+
+    act(() => {
+      transactionService.getTransactions.mockReturnValue([{ id: 't2' }]);
+      const resultado = obtenerContexto().eliminarTransaccion('t1');
+      expect(resultado.ok).toBe(true);
+    });
+
+    expect(transactionService.deleteTransaction).toHaveBeenCalledWith('t1');
+    expect(obtenerContexto().transacciones).toEqual([{ id: 't2' }]);
   });
 
   test('useApp lanza error sin AppProvider', () => {

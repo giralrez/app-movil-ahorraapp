@@ -1,10 +1,17 @@
 import React from 'react';
-import { Card, EmptyState, TransactionItem } from '../ui';
+import { Button, Card, EmptyState, TransactionItem } from '../ui';
 
-export default function RecentTransactions({ transacciones = [] }) {
+export default function RecentTransactions({ transacciones = [], onVerHistorial }) {
   return (
     <Card>
-      <h3 className="ahorr-card__titulo">Últimas transacciones</h3>
+      <div className="ahorr-card__header">
+        <h3 className="ahorr-card__titulo">Últimas transacciones</h3>
+        {onVerHistorial && (
+          <Button variant="ghost" size="small" onClick={onVerHistorial}>
+            Ver historial
+          </Button>
+        )}
+      </div>
       {transacciones.length === 0 ? (
         <EmptyState
           icono="fileTray"

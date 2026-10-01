@@ -114,7 +114,10 @@ export default function Principal() {
             <MonthlyTrend tendencia={tendencia} />
           </div>
 
-          <RecentTransactions transacciones={dashboard.ultimas} />
+          <RecentTransactions
+            transacciones={dashboard.ultimas}
+            onVerHistorial={irA('/historial')}
+          />
         </div>
 
       </IonContent>
