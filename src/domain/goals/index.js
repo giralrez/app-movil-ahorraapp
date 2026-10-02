@@ -1,1 +1,1 @@
-export { createSavingsGoal, isValidSavingsGoal } from './SavingsGoal';
+export { createSavingsGoal, isValidSavingsGoal, esFechaLimiteValida } from './SavingsGoal';

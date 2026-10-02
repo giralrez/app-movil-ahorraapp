@@ -1,15 +1,11 @@
 import { TIPOS_TRANSACCION } from './transactionTypes';
 import { esMetodoPagoValido } from './paymentMethods';
+import { generarId } from '../idGenerator';
+
+export { generarId };
 
 export const CAMPOS_TRANSACCION = ['tipo', 'categoria', 'monto', 'fecha'];
 export const CAMPOS_OPCIONALES_TRANSACCION = ['metodoPago', 'descripcion'];
-
-export function generarId() {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();
-  }
-  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
-}
 
 export function esFechaValida(fecha) {
   if (typeof fecha !== 'string') return false;

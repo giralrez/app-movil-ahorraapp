@@ -1,3 +1,5 @@
+export const UMBRAL_ALERTA = 80;
+
 export function montoNumerico(monto) {
   const numero = Number(monto);
   return Number.isFinite(numero) ? numero : 0;

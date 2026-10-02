@@ -5,7 +5,11 @@ jest.mock('./localStorageAdapter', () => ({
   leerUsuario: jest.fn(),
   escribirUsuario: jest.fn(),
   leerTransacciones: jest.fn(),
-  escribirTransacciones: jest.fn()
+  escribirTransacciones: jest.fn(),
+  leerPresupuestos: jest.fn(),
+  escribirPresupuestos: jest.fn(),
+  leerMetas: jest.fn(),
+  escribirMetas: jest.fn()
 }));
 
 describe('storageService', () => {
@@ -35,5 +39,31 @@ describe('storageService', () => {
     const lista = [{ tipo: 'gasto', monto: 50 }];
     storageService.setTransacciones(lista);
     expect(adapter.escribirTransacciones).toHaveBeenCalledWith(lista);
+  });
+
+  test('getPresupuestos delega en el adapter', () => {
+    const lista = [{ nombre: 'Comida', montoLimite: 400 }];
+    adapter.leerPresupuestos.mockReturnValue(lista);
+    expect(storageService.getPresupuestos()).toEqual(lista);
+    expect(adapter.leerPresupuestos).toHaveBeenCalled();
+  });
+
+  test('setPresupuestos delega en el adapter', () => {
+    const lista = [{ nombre: 'Luz', montoLimite: 80 }];
+    storageService.setPresupuestos(lista);
+    expect(adapter.escribirPresupuestos).toHaveBeenCalledWith(lista);
+  });
+
+  test('getMetas delega en el adapter', () => {
+    const lista = [{ nombre: 'Viaje', montoObjetivo: 1000 }];
+    adapter.leerMetas.mockReturnValue(lista);
+    expect(storageService.getMetas()).toEqual(lista);
+    expect(adapter.leerMetas).toHaveBeenCalled();
+  });
+
+  test('setMetas delega en el adapter', () => {
+    const lista = [{ nombre: 'Fondo', montoObjetivo: 500 }];
+    storageService.setMetas(lista);
+    expect(adapter.escribirMetas).toHaveBeenCalledWith(lista);
   });
 });

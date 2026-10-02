@@ -1,8 +1,23 @@
 import React from 'react';
+import { UMBRAL_ALERTA } from '../../utils/financial';
 
-export default function ProgressBar({ label, value = 0, max = 100 }) {
+export default function ProgressBar({
+  label,
+  value = 0,
+  max = 100,
+  inverted = false,
+  umbralAlerta = UMBRAL_ALERTA
+}) {
   const porcentaje = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
-  const estado = porcentaje >= 100 ? 'danger' : porcentaje >= 80 ? 'success' : '';
+  const estado = inverted
+    ? porcentaje >= 100
+      ? 'danger'
+      : porcentaje >= umbralAlerta
+        ? 'warning'
+        : 'success'
+    : porcentaje >= umbralAlerta
+      ? 'success'
+      : '';
 
   return (
     <div
