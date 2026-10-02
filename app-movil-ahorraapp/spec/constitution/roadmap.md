@@ -143,6 +143,30 @@ Resultado:
 
 ---
 
+## Fase 8 — Backend
+
+### 008 — Supabase
+
+Objetivo:
+
+Migrar la persistencia local a Supabase como base de datos.
+
+Resultado:
+
+- adaptador Supabase sobre StorageInterface;
+- autenticación de usuarios;
+- RLS (cada usuario ve solo sus datos);
+- consentimiento explícito para datos externos;
+- estrategia offline / última sincronización;
+- migración de datos locales (exportación de 007 como herramienta).
+
+Nota:
+
+Depende de 007 (StorageInterface + exportación). No inicia antes de que
+005 y 006 estén estables.
+
+---
+
 ## Prioridad
 
 P0:
@@ -162,7 +186,8 @@ P2:
 
 - exportación;
 - backups;
-- funcionalidades avanzadas.
+- funcionalidades avanzadas;
+- backend.
 
 ## Regla
 
