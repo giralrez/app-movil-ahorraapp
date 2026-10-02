@@ -14,6 +14,22 @@ jest.mock('../services/transactionService', () => ({
   deleteTransaction: jest.fn()
 }));
 
+jest.mock('../services/budgetService', () => ({
+  getBudgets: jest.fn(() => []),
+  addBudget: jest.fn(),
+  updateBudget: jest.fn(),
+  deleteBudget: jest.fn()
+}));
+
+jest.mock('../services/goalService', () => ({
+  getGoals: jest.fn(() => []),
+  addGoal: jest.fn(),
+  updateGoal: jest.fn(),
+  deleteGoal: jest.fn(),
+  contributeToGoal: jest.fn(),
+  withdrawFromGoal: jest.fn()
+}));
+
 import { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { MemoryRouter, Route, Switch } from 'react-router-dom';

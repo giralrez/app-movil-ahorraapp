@@ -5,3 +5,7 @@ export { default as PeriodSelector } from './PeriodSelector';
 export { default as CategoryChart } from './CategoryChart';
 export { default as MonthlyTrend } from './MonthlyTrend';
 export { default as RecentTransactions } from './RecentTransactions';
+export { default as BudgetCard } from './BudgetCard';
+export { default as BudgetProgress } from './BudgetProgress';
+export { default as SavingsGoalCard } from './SavingsGoalCard';
+export { default as GoalProgress } from './GoalProgress';

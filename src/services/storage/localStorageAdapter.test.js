@@ -37,4 +37,34 @@ describe('localStorageAdapter', () => {
     localStorage.setItem('transacciones', JSON.stringify({ noEsArray: true }));
     expect(adapter.leerTransacciones()).toEqual([]);
   });
+
+  test('lee presupuestos vacios si no existe', () => {
+    expect(adapter.leerPresupuestos()).toEqual([]);
+  });
+
+  test('persiste y lee presupuestos', () => {
+    const lista = [{ id: 'p1', nombre: 'Comida', montoLimite: 400, periodo: 'mensual' }];
+    adapter.escribirPresupuestos(lista);
+    expect(adapter.leerPresupuestos()).toEqual(lista);
+  });
+
+  test('devuelve [] ante JSON corrupto en presupuestos', () => {
+    localStorage.setItem('presupuestos', '{"corrupto":');
+    expect(adapter.leerPresupuestos()).toEqual([]);
+  });
+
+  test('lee metas vacias si no existe', () => {
+    expect(adapter.leerMetas()).toEqual([]);
+  });
+
+  test('persiste y lee metas', () => {
+    const lista = [{ id: 'm1', nombre: 'Viaje', montoObjetivo: 1000, montoActual: 100 }];
+    adapter.escribirMetas(lista);
+    expect(adapter.leerMetas()).toEqual(lista);
+  });
+
+  test('devuelve [] ante JSON corrupto en metas', () => {
+    localStorage.setItem('metas', 'no-es-json');
+    expect(adapter.leerMetas()).toEqual([]);
+  });
 });

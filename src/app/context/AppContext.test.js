@@ -14,11 +14,29 @@ jest.mock('../../services/transactionService', () => ({
   deleteTransaction: jest.fn()
 }));
 
+jest.mock('../../services/budgetService', () => ({
+  getBudgets: jest.fn(),
+  addBudget: jest.fn(),
+  updateBudget: jest.fn(),
+  deleteBudget: jest.fn()
+}));
+
+jest.mock('../../services/goalService', () => ({
+  getGoals: jest.fn(),
+  addGoal: jest.fn(),
+  updateGoal: jest.fn(),
+  deleteGoal: jest.fn(),
+  contributeToGoal: jest.fn(),
+  withdrawFromGoal: jest.fn()
+}));
+
 import { act } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AppProvider, useApp } from './AppContext';
 import * as storageService from '../../services/storage/storageService';
 import * as transactionService from '../../services/transactionService';
+import * as budgetService from '../../services/budgetService';
+import * as goalService from '../../services/goalService';
 
 function montarProvider() {
   let contexto;
@@ -49,6 +67,8 @@ describe('AppContext', () => {
     jest.clearAllMocks();
     storageService.getUsuario.mockReturnValue('');
     transactionService.getTransactions.mockReturnValue([]);
+    budgetService.getBudgets.mockReturnValue([]);
+    goalService.getGoals.mockReturnValue([]);
   });
 
   test('carga inicial desde storage (lazy init)', () => {
@@ -130,6 +150,80 @@ describe('AppContext', () => {
 
     expect(transactionService.deleteTransaction).toHaveBeenCalledWith('t1');
     expect(obtenerContexto().transacciones).toEqual([{ id: 't2' }]);
+  });
+
+  test('carga inicial de presupuestos y metas', () => {
+    budgetService.getBudgets.mockReturnValue([{ id: 'p1', nombre: 'Comida' }]);
+    goalService.getGoals.mockReturnValue([{ id: 'm1', nombre: 'Viaje' }]);
+
+    const { obtenerContexto } = montarProvider();
+
+    expect(obtenerContexto().presupuestos).toEqual([{ id: 'p1', nombre: 'Comida' }]);
+    expect(obtenerContexto().metas).toEqual([{ id: 'm1', nombre: 'Viaje' }]);
+  });
+
+  test('agregarPresupuesto exitoso actualiza el estado', () => {
+    budgetService.addBudget.mockReturnValue({ id: 'p1', nombre: 'Comida' });
+    const { obtenerContexto } = montarProvider();
+
+    let resultado;
+    act(() => {
+      budgetService.getBudgets.mockReturnValue([{ id: 'p1', nombre: 'Comida' }]);
+      resultado = obtenerContexto().agregarPresupuesto({
+        nombre: 'Comida',
+        montoLimite: 400,
+        periodo: 'mensual'
+      });
+    });
+
+    expect(resultado.ok).toBe(true);
+    expect(budgetService.addBudget).toHaveBeenCalled();
+    expect(obtenerContexto().presupuestos).toEqual([{ id: 'p1', nombre: 'Comida' }]);
+  });
+
+  test('agregarPresupuesto expone error si el servicio falla', () => {
+    budgetService.addBudget.mockImplementation(() => {
+      throw new Error('Presupuesto inválido');
+    });
+    const { obtenerContexto } = montarProvider();
+
+    let resultado;
+    act(() => {
+      resultado = obtenerContexto().agregarPresupuesto({ nombre: '', montoLimite: 0 });
+    });
+
+    expect(resultado.ok).toBe(false);
+    expect(resultado.error).toBe('Presupuesto inválido');
+  });
+
+  test('aportarAMeta exitoso actualiza metas', () => {
+    goalService.contributeToGoal.mockReturnValue({ id: 'm1', montoActual: 150 });
+    const { obtenerContexto } = montarProvider();
+
+    let resultado;
+    act(() => {
+      goalService.getGoals.mockReturnValue([{ id: 'm1', montoActual: 150 }]);
+      resultado = obtenerContexto().aportarAMeta('m1', 50);
+    });
+
+    expect(resultado.ok).toBe(true);
+    expect(goalService.contributeToGoal).toHaveBeenCalledWith('m1', 50);
+    expect(obtenerContexto().metas).toEqual([{ id: 'm1', montoActual: 150 }]);
+  });
+
+  test('eliminarPresupuesto expone error si el servicio falla', () => {
+    budgetService.deleteBudget.mockImplementation(() => {
+      throw new Error('Presupuesto no encontrado');
+    });
+    const { obtenerContexto } = montarProvider();
+
+    let resultado;
+    act(() => {
+      resultado = obtenerContexto().eliminarPresupuesto('inexistente');
+    });
+
+    expect(resultado.ok).toBe(false);
+    expect(resultado.error).toBe('Presupuesto no encontrado');
   });
 
   test('useApp lanza error sin AppProvider', () => {

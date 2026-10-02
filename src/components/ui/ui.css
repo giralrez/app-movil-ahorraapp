@@ -362,3 +362,63 @@
   justify-content: center;
   gap: var(--space-sm);
 }
+
+/* ------------------ PLANIFICACIÓN (Feature 005) ------------------ */
+.ahorr-progress__fill--warning { background: var(--color-orange-500); }
+
+.ahorr-progress-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.ahorr-progress-block__text {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+  margin: 0;
+}
+
+.ahorr-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ahorr-badge--ok { background: var(--color-green-600); color: var(--color-white); }
+.ahorr-badge--alerta { background: var(--color-orange-100); color: var(--color-orange-700); }
+.ahorr-badge--superado { background: var(--color-red-50); color: var(--color-red-600); }
+.ahorr-badge--completada { background: var(--color-green-600); color: var(--color-white); }
+.ahorr-badge--en-curso { background: var(--color-gray-100); color: var(--color-gray-700); }
+.ahorr-badge--vencida { background: var(--color-red-500); color: var(--color-white); }
+
+.ahorr-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ahorr-card__meta {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.ahorr-budget-card--ok { border-left: 4px solid var(--color-green-500); }
+.ahorr-budget-card--alerta { border-left: 4px solid var(--color-orange-500); }
+.ahorr-budget-card--superado { border-left: 4px solid var(--color-red-500); }
+.ahorr-goal-card--completada { border-left: 4px solid var(--color-green-500); }
+.ahorr-goal-card--en-curso { border-left: 4px solid var(--color-blue-400); }
+.ahorr-goal-card--vencida { border-left: 4px solid var(--color-red-500); }
+
+.dashboard .salud-header { width: 100%; }
+
+.ahorr-item-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}

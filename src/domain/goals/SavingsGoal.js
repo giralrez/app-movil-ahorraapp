@@ -1,3 +1,11 @@
+import { generarId } from '../idGenerator';
+
+export function esFechaLimiteValida(fecha) {
+  if (fecha === null || fecha === undefined) return true;
+  if (typeof fecha !== 'string') return false;
+  return /^\d{4}-\d{2}-\d{2}$/.test(fecha);
+}
+
 export function isValidSavingsGoal(meta) {
   if (!meta || typeof meta !== 'object') return false;
   const montoObjetivoValido =
@@ -13,16 +21,17 @@ export function isValidSavingsGoal(meta) {
     typeof meta.nombre === 'string' &&
     meta.nombre.trim().length > 0 &&
     montoObjetivoValido &&
-    montoActualValido
+    montoActualValido &&
+    esFechaLimiteValida(meta.fechaLimite)
   );
 }
 
-export function createSavingsGoal({ nombre, montoObjetivo, montoActual = 0, fechaLimite = null, id = null } = {}) {
+export function createSavingsGoal({ nombre, montoObjetivo, montoActual = 0, fechaLimite = null, id } = {}) {
   return {
-    id,
+    id: id ?? generarId(),
     nombre: typeof nombre === 'string' ? nombre.trim() : nombre,
     montoObjetivo,
     montoActual,
-    fechaLimite
+    fechaLimite: fechaLimite === undefined ? null : fechaLimite
   };
 }

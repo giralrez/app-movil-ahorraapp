@@ -1,5 +1,7 @@
 const CLAVE_USUARIO = 'usuario';
 const CLAVE_TRANSACCIONES = 'transacciones';
+const CLAVE_PRESUPUESTOS = 'presupuestos';
+const CLAVE_METAS = 'metas';
 
 export function leerUsuario() {
   try {
@@ -34,5 +36,43 @@ export function escribirTransacciones(lista) {
     localStorage.setItem(CLAVE_TRANSACCIONES, JSON.stringify(lista || []));
   } catch (error) {
     console.error('Error al guardar transacciones:', error);
+  }
+}
+
+export function leerPresupuestos() {
+  try {
+    const datos = localStorage.getItem(CLAVE_PRESUPUESTOS);
+    const lista = JSON.parse(datos);
+    return Array.isArray(lista) ? lista : [];
+  } catch (error) {
+    console.error('Error al leer presupuestos:', error);
+    return [];
+  }
+}
+
+export function escribirPresupuestos(lista) {
+  try {
+    localStorage.setItem(CLAVE_PRESUPUESTOS, JSON.stringify(lista || []));
+  } catch (error) {
+    console.error('Error al guardar presupuestos:', error);
+  }
+}
+
+export function leerMetas() {
+  try {
+    const datos = localStorage.getItem(CLAVE_METAS);
+    const lista = JSON.parse(datos);
+    return Array.isArray(lista) ? lista : [];
+  } catch (error) {
+    console.error('Error al leer metas:', error);
+    return [];
+  }
+}
+
+export function escribirMetas(lista) {
+  try {
+    localStorage.setItem(CLAVE_METAS, JSON.stringify(lista || []));
+  } catch (error) {
+    console.error('Error al guardar metas:', error);
   }
 }

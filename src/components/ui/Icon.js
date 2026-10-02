@@ -8,7 +8,8 @@ import {
   wallet,
   receipt,
   fileTray,
-  documentText
+  documentText,
+  trophy
 } from 'ionicons/icons';
 
 const ICONOS = {
@@ -19,7 +20,8 @@ const ICONOS = {
   wallet,
   receipt,
   fileTray,
-  documentText
+  documentText,
+  trophy
 };
 
 export default function Icon({ nombre, ...props }) {

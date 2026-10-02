@@ -15,10 +15,12 @@ import {
 } from '../components/financial';
 import { construirPeriodo, getDashboardData } from '../features/dashboard/DashboardService';
 import { tendenciaMensual } from '../features/dashboard/FinancialSelectors';
+import { presupuestosEnAlerta } from '../features/budgets/BudgetCalculations';
+import { cadenaFecha } from '../utils/dates';
 
 export default function Principal() {
   const history = useHistory();
-  const { usuario: nombreUsuario } = useApp();
+  const { usuario: nombreUsuario, presupuestos } = useApp();
   const transacciones = useTransactions();
   const usuario = nombreUsuario || 'Usuario';
 
@@ -34,6 +36,11 @@ export default function Principal() {
     [transacciones, periodo]
   );
   const tendencia = useMemo(() => tendenciaMensual(transacciones), [transacciones]);
+  const hoy = cadenaFecha(new Date());
+  const presupuestosAlerta = useMemo(
+    () => presupuestosEnAlerta(presupuestos, transacciones, hoy).length,
+    [presupuestos, transacciones, hoy]
+  );
 
   const irA = useCallback((ruta) => () => history.push(ruta), [history]);
   const balanceNegativo =
@@ -102,6 +109,32 @@ export default function Principal() {
               <Icon nombre="add" aria-hidden="true" /> Añadir Gasto
             </Button>
           </div>
+
+          <div className="salud-header">
+            <h2 className="titulo-seccion">Mi planificación</h2>
+          </div>
+
+          <div className="botones-acciones">
+            <Button variant="primary" block onClick={irA('/presupuestos')}>
+              <Icon nombre="wallet" aria-hidden="true" /> Presupuestos
+            </Button>
+
+            <Button variant="primary" block onClick={irA('/metas')}>
+              <Icon nombre="trophy" aria-hidden="true" /> Metas de ahorro
+            </Button>
+          </div>
+
+          {presupuestosAlerta > 0 && (
+            <Card variant="alert" aria-live="polite">
+              <Icon nombre="warning" aria-hidden="true" />{' '}
+              {presupuestosAlerta === 1
+                ? '1 presupuesto está cerca del límite o superado.'
+                : `${presupuestosAlerta} presupuestos están cerca del límite o superados.`}{' '}
+              <Button variant="ghost" size="small" onClick={irA('/presupuestos')}>
+                Ver presupuestos
+              </Button>
+            </Card>
+          )}
 
           {balanceNegativo && (
             <Card variant="alert">
